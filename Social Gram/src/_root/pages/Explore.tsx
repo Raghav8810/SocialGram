@@ -1,12 +1,29 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
-import SearchResult from "@/components/shared/SearchResult";
+
 import { Input } from "@/components/ui/input"
 import useDebounce from "@/hooks/useDebounce";
 import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutations";
 
 import { useEffect, useState } from "react"
 import { useInView } from "react-intersection-observer";
+
+export type SearchResultProps = {
+  isSearchFetching: boolean;
+  searchedPosts: any;
+};
+
+const SearchResults = ({ isSearchFetching, searchedPosts }: SearchResultProps) => {
+  if (isSearchFetching) {
+    return <Loader />;
+  } else if (searchedPosts && searchedPosts.documents.length > 0) {
+    return <GridPostList posts={searchedPosts.documents} />;
+  } else {
+    return (
+      <p className="text-light-4 mt-10 text-center w-full">No results found</p>
+    );
+  }
+};
 
 const Explore = () => {
   const {ref,inView} = useInView();
@@ -32,7 +49,8 @@ const Explore = () => {
 
       
        const shouldShowSearchResults = searchValue !== '';
-       const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item) =>item.documents.length === 0)
+       const shouldShowPosts = !shouldShowSearchResults && 
+           posts.pages.every((item) =>item?.documents.length === 0);
   return (
     <div className="explore-container">
          <div className="explore-inner_container">
@@ -70,15 +88,15 @@ const Explore = () => {
          {/* //show what trending today */}
            <div className="flex flex-wrap gap-9 w-full max-w-5xl">
            {shouldShowSearchResults ? (
-          <SearchResult
+          <SearchResults
             isSearchFetching={isSearchFetching}
             searchedPosts={searchedPosts}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4  *: mt-10 text-center w-full">End of posts</p>
         ) : (
-          posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index}`} posts={item.documents} />
+          posts.pages.map((item,index) => (
+            <GridPostList key={`page-${index}`} posts={item?.documents} />
           ))
         )}
            </div>

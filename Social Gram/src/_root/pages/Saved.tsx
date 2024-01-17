@@ -1,4 +1,6 @@
-import GridPostList from "@/components/shared/GridPostList";
+import React, { Suspense } from "react";
+//import GridPostList from "@/components/shared/GridPostList";
+const GridPostList = React.lazy(() => import('@/components/shared/GridPostList')); 
 import Loader from "@/components/shared/Loader";
 import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
@@ -37,7 +39,10 @@ const Saved = () => {
           {savePosts.length === 0 ? (
             <p className="text-light-4">No available posts</p>
           ) : (
-            <GridPostList posts={savePosts} showStats={false} />
+            <Suspense fallback={<>Loading app...</>}>
+                <GridPostList posts={savePosts} showStats={false} />
+               </Suspense>
+             
           )}
         </ul>
       )}

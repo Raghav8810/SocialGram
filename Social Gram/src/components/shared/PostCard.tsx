@@ -1,10 +1,13 @@
+import React, {Suspense} from "react";
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 
 
 import { multiFormatDateString } from "@/lib/utils";
 import { useUserContext } from "@/context/AuthContext";
-import PostStats from "./PostStats";
+
+
+const PostStats = React.lazy(() => import('./PostStats')); 
 
 type PostCardProps = {
   post: Models.Document;
@@ -20,14 +23,14 @@ const PostCard = ({ post }: PostCardProps) => {
       <div className="flex-between">
         <div className="flex items-center gap-3">
           <Link to={`/profile/${post.creator.$id}`}>
-            <img
-              src={
-                post.creator?.imageUrl ||
-                "/assets/icons/profile-placeholder.svg"
-              }
+          <img
+             src={ post.creator?.imageUrl ||
+              "/assets/icons/profile-placeholder.svg"}
               alt="creator"
               className="w-12 lg:h-12 rounded-full"
-            />
+          
+          />
+             
           </Link>
 
           <div className="flex flex-col">
@@ -49,12 +52,18 @@ const PostCard = ({ post }: PostCardProps) => {
         <Link
           to={`/update-post/${post.$id}`}
           className={`${user.id !== post.creator.$id && "hidden"}`}>
-          <img
+            <img
+                   src={"/assets/icons/edit.svg"}
+                   alt="edit"
+                   width={20}
+                   height={20}
+            />
+          {/* <img
             src={"/assets/icons/edit.svg"}
             alt="edit"
             width={20}
             height={20}
-          />
+          /> */}
         </Link>
       </div>
 
@@ -71,15 +80,25 @@ const PostCard = ({ post }: PostCardProps) => {
         </div>
 
         <img
+              src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
+              alt="post image"
+              className="post-card_img"
+        />
+
+        {/* <img
           src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
           alt="post image"
           className="post-card_img"
-        />
+        /> */}
       </Link>
 
+      <Suspense fallback={<>Loading app...</>}> 
       <PostStats post={post} userId={user.id} />
+      </Suspense>
+
+    
     </div>
   );
 };
 
-export default PostCard;
+export default PostCard

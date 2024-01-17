@@ -14,6 +14,8 @@ import { Link , useNavigate} from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import { useCallback } from "react"
 
 
 
@@ -41,7 +43,9 @@ const SignUpForm = () => {
   })
  
   // 2. Define a submit handler.
-  const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
+  const handleSignup = useCallback(() =>{
+
+        async (values: z.infer<typeof SignupValidation>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     //create a new user
@@ -80,11 +84,12 @@ const SignUpForm = () => {
       console.log({ error });
     }
   }
+}, []) 
 
   return (
     <Form {...form}>
           <div className="sm:w-420 flex-center flex-col">
-          <img src="/assets/images/logo2.png" className="w-20  " alt="" />
+          <LazyLoadImage src="/assets/images/logo2.png" loading="lazy" className="w-20 h-30" alt="logo" />
              <h2 className="h3-bold md:h2-bold pt-5 sm:pt-4">Create a new account</h2>
              <p className="text-light-3 small-medium md:base-regular mt-2">Enter your details to start using Socialgram</p>
        
@@ -96,7 +101,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="text" className="shad-input" placeholder="Enter you Name" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}
@@ -113,7 +118,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="text" className="shad-input" placeholder="Enter your username" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}
@@ -130,7 +135,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="email" className="shad-input" placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}
@@ -148,7 +153,7 @@ const SignUpForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="password" className="shad-input" placeholder="Enter your password" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}

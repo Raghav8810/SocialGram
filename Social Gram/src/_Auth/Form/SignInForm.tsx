@@ -6,6 +6,11 @@ import { useForm } from "react-hook-form"
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+
+
+
+
+
 import {SigninValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/shared/Loader"
@@ -14,6 +19,7 @@ import { Link , useNavigate} from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
 import {useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
+import { LazyLoadImage } from "react-lazy-load-image-component"
 
 
 
@@ -63,7 +69,7 @@ const SignInForm = () => {
   return (
     <Form {...form}>
           <div className="sm:w-420 flex-center flex-col">
-            <img src="/assets/images/logo2.png" className="w-40 h-30" alt="" />
+           <LazyLoadImage src="/assets/images/logo2.png" loading="lazy" className="w-40 h-30" alt="logo"  />
              <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Log in to your account</h2>
              <p className="text-light-3 small-medium md:base-regular mt-2">Welcome! back Please enter your details</p>
        
@@ -77,7 +83,7 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="email" className="shad-input" placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}
@@ -95,7 +101,7 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" placeholder="shadcn" {...field} />
+                  <Input type="password" className="shad-input" placeholder="Enter your password" {...field} />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}

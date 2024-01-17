@@ -1,9 +1,13 @@
-import PostCard from "@/components/shared/PostCard";
+import React, {Suspense} from "react";
+//import PostCard from "@/components/shared/PostCard";
+const PostCard = React.lazy(() =>import("@/components/shared/PostCard"))
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import { Models } from "appwrite";
 import { Loader } from "lucide-react";
 
+
 const Home = () => {
+  const Postmemo = React.memo(PostCard);
   const {
     data: posts,
     isLoading: isPostLoading,
@@ -33,7 +37,10 @@ const Home = () => {
                 <ul className="flex flex-col flex-1 gap-9 w-full ">
                 {posts?.documents.map((post: Models.Document) => (
                   <li key={post.$id} className="flex justify-center w-full">
-                    <PostCard post={post} />  
+                    <Suspense fallback={<>Loading app...</>}> 
+                       <Postmemo post={post} />  
+                    </Suspense>
+                   
                   </li>
                 ))}
               </ul>

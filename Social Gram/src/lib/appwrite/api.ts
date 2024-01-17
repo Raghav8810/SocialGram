@@ -1,7 +1,15 @@
+
 import { ID, Query } from "appwrite";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
+
+// const account = React.lazy(() => import('./config')); 
+// const appwriteConfig = React.lazy(() => import('./config')); 
+// const avatars = React.lazy(() => import('./config')); 
+// const databases = React.lazy(() => import('./config')); 
+// const storage = React.lazy(() => import('./config')); 
+
 
 
 export async function createUserAccount(user: INewUser) {
@@ -351,7 +359,6 @@ export async function savePost(userId: string, postId: string) {
     console.log(error);
   }
 }
-
 // ============================== DELETE SAVED POST
 export async function deleteSavedPost(savedRecordId: string) {
   try {

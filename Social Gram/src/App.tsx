@@ -3,6 +3,7 @@ import AuthLayout from './_Auth/Form/AuthLayout'
 import SignInForm from './_Auth/Form/SignInForm'
 import SignUpForm from './_Auth/Form/SignUpForm'
 //import { AllUsers, CreatePost, EditPost, PostDetails, Profile, Saved, UpdateProfile } from './_root/pages'
+//demomooo
 const Home = React.lazy(() => import('./_root/pages/Home')); 
 const Explore = React.lazy(() => import('./_root/pages/Explore'));
 const Saved = React.lazy(() => import('./_root/pages/Saved'));  

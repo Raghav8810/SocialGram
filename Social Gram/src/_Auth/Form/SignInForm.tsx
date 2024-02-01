@@ -83,7 +83,7 @@ const SignInForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" placeholder="Enter your email" {...field} />
+                  <Input type="email" className="shad-input" placeholder="Enter your email" {...field}  />
                 </FormControl>
                 <FormDescription>
                   {/* This is your public display name. */}

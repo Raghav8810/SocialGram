@@ -1,5 +1,5 @@
 
-import { ID, Query } from "appwrite";
+import { ID, Permission, Query, Role } from "appwrite";
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
@@ -59,11 +59,46 @@ export async function saveUserToDB(user: {
 
     return newUser;
   } catch (error) { 
+    console.log("error savinng user to DB",error);
+  }
+}
+
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+
+    return currentAccount;
+  } catch (error) {
     console.log(error);
   }
 }
 
-export async function signInAccount(user: { email: string; password: string; }) {
+
+
+export async function getCurrentUser(){
+  try{
+    const currentAccount = await getAccount();
+
+    if (!currentAccount) throw Error("no current account");
+    console.log(currentAccount);
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+    
+
+    if (!currentUser) throw Error("no current");
+
+    return currentUser.documents[0];
+  }catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
 
@@ -74,27 +109,6 @@ export async function signInAccount(user: { email: string; password: string; }) 
 }
 
 
-export async function getCurrentUser(){
-  try{
-    const currentAccount = await account.get();
-
-    if (!currentAccount) throw Error;
-
-    const currentUser = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      [Query.equal("accountId", currentAccount.$id)]
-    );
-    
-
-    if (!currentUser) throw Error;
-
-    return currentUser.documents[0];
-  }catch (error) {
-    console.log(error);
-    return null;
-  }
-}
 
 
 // sign out

@@ -15,7 +15,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
 import { LazyLoadImage } from "react-lazy-load-image-component"
-import { useCallback } from "react"
+
 
 
 
@@ -43,18 +43,18 @@ const SignUpForm = () => {
   })
  
   // 2. Define a submit handler.
-  const handleSignup = useCallback(() =>{
-
+  const handleSignup = () =>{
         async (values: z.infer<typeof SignupValidation>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     //create a new user
+    console.log(values);
     try {
       const newUser = await createUserAccount(values);
 
       if (!newUser) {
         toast({ title: "Sign up failed. Please try again.", });
-        
+          console.log("create user new user error")
         return;
       }
 
@@ -81,10 +81,10 @@ const SignUpForm = () => {
      
       }
     } catch (error) {
-      console.log({ error });
+      console.log(error);
     }
   }
-}, []) 
+};
 
   return (
     <Form {...form}>

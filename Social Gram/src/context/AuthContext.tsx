@@ -57,17 +57,23 @@ export const AuthProvider =({children} : {children: React.ReactNode})=>  {
   };
 
   useEffect(() => {
-    //const cookieFallback = localStorage.getItem("cookieFallback");
-    if(localStorage.getItem("cookieFallback") === '[]' ||
-      localStorage.getItem("cookieFallback") === null
-        
-    )
-    {
-      navigate('/sign-in');
-    }
+    // const cookieFallback = localStorage.getItem("cookieFallback");
+    // if (
+    //   cookieFallback === "[]" ||
+    //   cookieFallback === null ||
+    //   cookieFallback === undefined
+    // ) {
+    //   navigate("/sign-in");
+    // }
+    if(
+      localStorage.getItem('cookieFallback') === '[]' 
+      // localStorage.getItem('cookieFallback') === null
+      ) navigate("/sign-in");
+   
+    },[]);
 
-    checkAuthUser();
-  },[]);
+  //   checkAuthUser();
+  // }, []);
 
   const value = {
     user,
